@@ -1,0 +1,2 @@
+# CookSnap
+Asistente culinario.

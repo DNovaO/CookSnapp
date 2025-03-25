@@ -1,0 +1,244 @@
+html,
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background-color: #cdf2ff;
+    opacity: 1;
+}
+
+.navbar {
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border-bottom: 1px solid transparent;
+}
+
+.navbar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 8px; /* Ajusta el grosor del borde */
+    background: linear-gradient(90deg, #FF5535, #eec626, #FF5535);
+    background-size: 300% 100%; /* Ajusta el tamaño del gradiente para el efecto */
+    animation: border-animate 6s ease-in-out infinite;
+}
+
+@keyframes border-animate {
+    0% {
+        background-position: 0% 0;
+    }
+    50% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: 0% 0;
+    }
+}
+
+.navbar .navbar-brand img {
+    width: 100px;
+    height: auto;
+    min-width: 100px;
+    height: auto;
+}
+
+.navbar .nav-link {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+}
+
+.navbar .nav-link span {
+    color: #FF5535;
+}
+
+@media (max-width: 576px) {
+    .navbar .nav-link {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+}
+
+.position-relative {
+    position: relative;
+}
+
+.hexagon-img {
+    width: 100%;
+    max-width: 40vh;
+}
+
+.overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3vh;
+    text-align: center;
+}
+
+.icon-size {
+    font-size: 5vh;
+    color: #FF5535;
+}
+
+.overlay-text i {
+    display: block;
+    margin-bottom: 10px;
+}
+
+a.btn {
+    display: block;
+    position: relative;
+    text-decoration: none;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    z-index: 1000;
+    background: linear-gradient(
+        220deg,
+        #08a0d0 24%,
+        #07256c 48%,
+        #071963 71%,
+        #070d59 91%
+    );
+    border-bottom: 3px solid #070d59;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header .col-3 {
+margin-right: 30px; 
+display: flex;
+flex-direction: column; 
+align-items: center; 
+justify-content: center; 
+}
+
+.header .col-3 a {
+color: #FF5535; 
+font-weight: 600;
+text-align: center; 
+}
+
+.header .col-3 a:hover {
+color: #d14a1b; 
+}
+
+.header .col-3 p {
+margin-top: 5px; 
+font-size: 1rem; 
+color: #FF5535; 
+}
+
+.main-content {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    overflow: hidden; 
+}
+
+@keyframes breathing {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05); 
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .hexagon-img {
+        max-width: 25vh;
+    }
+
+    .overlay-text {
+        font-size: 2vh;
+    }
+
+    .icon-size {
+        font-size: 4vh;
+    }
+}
+
+/* Estilo general de las tarjetas */
+.custom-card {
+    height: 150px; /* Altura más grande */
+    border: 2px solid #070d59; /* Borde azul oscuro */
+    border-radius: 12px; /* Bordes redondeados */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    background-color: #ffffff;
+}
+
+/* Hover effect */
+.custom-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(7, 13, 89, 0.6); /* Sombra azul oscuro */
+    background: linear-gradient(45deg, rgba(255, 85, 53, 0.7), rgba(238, 198, 38, 0.7), rgba(255, 85, 53, 0.7)); /* Fondo degradado naranja */
+    border-color: #FF5535; /* Cambiar borde a naranja */
+    color: #ffffff; /* Cambiar texto a blanco */
+}
+
+
+/* Estilo de los íconos */
+.custom-icon {
+    font-size: 2.5rem; /* Íconos más grandes */
+    color: #070d59; /* Azul oscuro por defecto */
+    transition: color 0.3s ease;
+}
+
+/* Cambiar el color del ícono en hover */
+.custom-card:hover .custom-icon {
+    color: #ffffff; /* Cambiar el ícono a blanco */
+}
+
+/* Títulos y textos */
+.custom-card .card-title {
+    font-size: 1.4rem; /* Texto más grande */
+    color: #070d59; /* Azul oscuro por defecto */
+    transition: color 0.3s ease;
+}
+
+.custom-card .card-text {
+    font-size: 1rem;
+    color: #6c757d; /* Texto secundario */
+    transition: color 0.3s ease;
+}
+
+/* Cambiar texto en hover */
+.custom-card:hover .card-title, 
+.custom-card:hover .card-text {
+    color: #ffffff; /* Cambiar texto a blanco */
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .custom-card {
+        height: 200px; /* Reducir altura en pantallas pequeñas */
+    }
+    .custom-icon {
+        font-size: 2rem; /* Ajustar íconos */
+    }
+    .custom-card .card-title {
+        font-size: 1.2rem;
+    }
+}

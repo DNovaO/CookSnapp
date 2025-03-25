@@ -1,0 +1,236 @@
+/* Animated Circles CSS */
+.circles {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden; 
+}
+
+.circles li {
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 15px;
+    height: 15px;
+    background: rgba(118, 207, 223, 0.8);
+    animation: animate 20s linear infinite;
+    bottom: calc(10px - 10vh); 
+}
+
+.circles li:nth-child(1) {
+    left: 25%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+    border-radius: 50%;
+    border-top-left-radius: 0 !important;
+    background: rgba(47, 44, 92, 0.8);
+}
+
+.circles li:nth-child(2) {
+    left: 10%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 0s;
+    animation-duration: 22s;
+    border-radius: 50%;
+    background: rgba(96, 183, 199, 0.8);
+}
+
+.circles li:nth-child(3) {
+    left: 70%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+    border-radius: 50%;
+    background: rgba(47, 44, 92, 0.8);
+}
+
+.circles li:nth-child(4) {
+    left: 40%;
+    width: 50px;
+    height: 50px;
+    animation-delay: 0s;
+    animation-duration: 14s;
+    border-radius: 50%;
+    background: rgba(114, 63, 145, 0.8);
+}
+
+.circles li:nth-child(5) {
+    left: 65%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 0s;
+    animation-duration: 18s;
+    border-radius: 50%;
+    background: rgba(96, 183, 199, 0.8);
+}
+
+.circles li:nth-child(6) {
+    left: 75%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 0s;
+    animation-duration: 24s;
+    border-radius: 50%;
+    background: rgba(114, 63, 145, 0.8);
+}
+
+.circles li:nth-child(7) {
+    left: 35%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 0s;
+    animation-duration: 26s;
+    border-radius: 50%;
+    background: rgba(47, 44, 92, 0.8);
+}
+
+.circles li:nth-child(8) {
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 0s;
+    animation-duration: 28s;
+    border-radius: 50%;
+    background: rgba(114, 63, 145, 0.8);
+}
+
+.circles li:nth-child(9) {
+    left: 20%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 0s;
+    animation-duration: 32s;
+    border-radius: 50%;
+    background: rgba(47, 44, 92, 0.8);
+}
+
+.circles li:nth-child(10) {
+    left: 85%;
+    width: 45px;
+    height: 45px;
+    animation-delay: 0s;
+    animation-duration: 36s;
+    border-radius: 50%;
+    background: rgba(96, 183, 199, 0.8);
+}
+
+.circles li:nth-child(11) {
+    left: 15%;
+    width: 35px;
+    height: 35px;
+    animation-delay: 2s;
+    animation-duration: 20s;
+    border-radius: 50%;
+    background: rgba(114, 63, 145, 0.8);
+}
+
+.circles li:nth-child(12) {
+    left: 55%;
+    width: 50px;
+    height: 50px;
+    animation-delay: 4s;
+    animation-duration: 28s;
+    border-radius: 50%;
+    background: rgba(96, 183, 199, 0.8);
+}
+
+.circles li:nth-child(13) {
+    left: 80%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 6s;
+    animation-duration: 24s;
+    border-radius: 50%;
+    background: rgba(47, 44, 92, 0.8);
+}
+
+.circles li:nth-child(14) {
+    left: 5%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 8s;
+    animation-duration: 32s;
+    border-radius: 50%;
+    background: rgba(114, 63, 145, 0.8);
+}
+
+.circles li:nth-child(15) {
+    left: 45%;
+    width: 55px;
+    height: 55px;
+    animation-delay: 10s;
+    animation-duration: 30s;
+    border-radius: 50%;
+    background: rgba(96, 183, 199, 0.8);
+}
+
+.circles li:nth-child(16) {
+    left: 30%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 12s;
+    animation-duration: 26s;
+    border-radius: 50%;
+    background: rgba(47, 44, 92, 0.8);
+}
+
+.circles li:nth-child(17) {
+    left: 25%;
+    width: 45px;
+    height: 45px;
+    animation-delay: 14s;
+    animation-duration: 22s;
+    border-radius: 50%;
+    background: rgba(114, 63, 145, 0.8);
+}
+
+.circles li:nth-child(18) {
+    left: 60%;
+    width: 50px;
+    height: 50px;
+    animation-delay: 16s;
+    animation-duration: 20s;
+    border-radius: 50%;
+    background: rgba(96, 183, 199, 0.8);
+}
+
+.circles li:nth-child(19) {
+    left: 75%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 18s;
+    animation-duration: 26s;
+    border-radius: 50%;
+    background: rgba(47, 44, 92, 0.8);
+}
+
+.circles li:nth-child(20) {
+    left: 40%;
+    width: 30px;
+    height: 30px;
+    animation-delay: 20s;
+    animation-duration: 28s;
+    border-radius: 50%;
+    background: rgba(114, 63, 145, 0.8);
+}
+
+@keyframes animate {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translateY(-50vh) rotate(360deg); /* Mayor desplazamiento hacia arriba */
+        opacity: 0.5;
+    }
+    100% {
+        transform: translateY(-110vh) rotate(720deg); /* Límite superior ajustado */
+    }
+}

@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore Recipes</title>
+
+    <link rel="icon" href="{% static 'resources/cooksnap-logo.png' %}" alt="CookSnapIcon" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    
+    <link rel="stylesheet" href="{% static 'styles/style_explore_recipes.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/styleCirculos.css' %}" />
+  </head>
+
+  <body class="background">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light p-3">
+      <!-- Logo -->
+      <a class="navbar-brand" href="{% url 'main' %}">
+        <img
+          src="{% static 'resources/cooksnap-logo.png' %}"
+          alt="Cooksnap Logo"
+          class="hexagon-img"
+          style="min-width:150px; height:auto;"
+        />
+      </a>
+
+      <!-- Toggler button for mobile -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar content -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item">
+            <h1
+              class="nav-link mb-0 text-center text-lg-start fw-bold fs-5 text-dark"
+            >
+              Welcome <span style="color:#FF5535">{{ user.username }}</span>!
+              Ready to start cooking?
+            </h1>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <ul class="circles">
+        {% for _ in "12345678901234567890"%}
+        <li></li>
+        {% endfor %}
+    </ul>
+
+    <div class="container mt-3">
+      <div class="table-responsive">
+        <table class="table floating-table">
+          <thead>
+            <tr>
+              <th scope="col">Recipes you may like</th>
+              <th scope="col">Difficulty</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for recipe in saved_recipes %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+              <td>{{ recipe.name }}</td>
+              <td>{{ recipe.category }}</td>
+              <td>
+                <a
+                  href="{% url 'recipe_detail' recipe.id %}"
+                  class="btn btn-primary"
+                  >Show</a
+                >
+                <a
+                  href="{% url 'delete_recipe' recipe.id %}"
+                  class="btn btn-danger"
+                  >Delete</a
+                >
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      jQuery(document).ready(function () {
+        jQuery(".container-wrap").append(
+          "<ul class='circles'><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>"
+        );
+      });
+    </script>
+
+  </body>
+</html>

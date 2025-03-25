@@ -1,0 +1,331 @@
+/* Reset Styles */
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #cdf2ff;
+}
+
+.navbar {
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border-bottom: 1px solid transparent;
+}
+
+.navbar::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 8px; /* Ajusta el grosor del borde */
+    background: linear-gradient(90deg, #FF5535, #eec626, #FF5535);
+    background-size: 300% 100%; /* Ajusta el tamaño del gradiente para el efecto */
+    animation: border-animate 6s ease-in-out infinite;
+}
+
+.custom-container {
+    min-height: 500px; /* Altura mínima para todos los pasos */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centra verticalmente el contenido */
+    transition: all 0.5s ease-in-out; /* Transición suave */
+}
+
+
+@keyframes border-animate {
+    0% {
+        background-position: 0% 0;
+    }
+    50% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: 0% 0;
+    }
+}
+.navbar .navbar-brand img {
+    width: 100px;
+    height: auto;
+    min-width: 100px;
+    height: auto;
+}
+
+.navbar .nav-link {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+}
+
+.navbar .nav-link span {
+    color: #FF5535;
+}
+
+@media (max-width: 576px) {
+    .navbar .nav-link {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+}
+
+.position-relative {
+    position: relative;
+}
+
+.hexagon-img {
+    width: 100%;
+    max-width: 40vh;
+}
+
+.ingredient-btn {
+    background-color: #FF5535;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.ingredient-btn:hover {
+    background-color: #d14a1b;
+    color: white;
+}
+
+/* Botones generales */
+.btn-enviar {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 2rem;
+    border: 2px solid transparent;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+/* Botón Previous */
+#prevBtn {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+#prevBtn:hover {
+    background-color: #d6d6d6;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Botón Next */
+#nextBtn {
+    background-color: #FF5535;
+    color: white;
+    margin-left: 0.75rem;
+}
+
+#nextBtn:hover {
+    background-color: #e64a2b;
+    box-shadow: 0 0 15px rgba(255, 85, 53, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Botón Submit */
+#submitBtn {
+    background-color: #28a745;
+    color: white;
+    margin-left: 0.75rem;
+}
+
+#submitBtn:hover {
+    background-color: #218838;
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Contenedor de botones */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+
+.btn-añadir {
+    background-color: #2669b1;
+    color: white;
+    padding: 5px 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-añadir:hover {
+    background-color: #091179;
+    color: white;
+}
+
+
+.search-btn {
+    background-color: #FF5535;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.search-btn:hover {
+    background-color: #d14a1b;
+    color: white;
+}
+
+.btn-enviar {
+    background-color: #2669b1;
+    color: white;
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-enviar:hover {
+    background-color: #091179;
+    color: white;
+}
+
+
+.hexagon-img {
+    max-width: 40vh;
+}
+
+.navbar .navbar-brand img {
+    width: 100px;
+}
+
+.custom-card {
+    height: 100%; /* Altura más grande */
+    border: 2px solid #070d59; /* Borde azul oscuro */
+    border-radius: 12px; /* Bordes redondeados */
+    background-color: #ffffff;
+}
+
+.custom-container {
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
+}
+
+.custom-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px; /* Ajusta el grosor del borde */
+    background: linear-gradient(90deg, #FF5535, #eec626, #FF5535);
+    background-size: 300% 100%; /* Ajusta el tamaño del gradiente para el efecto */
+    animation: border-animate 6s ease-in-out infinite;
+    border-radius: 0 0 8px 8px; /* Suavizar esquinas inferiores del borde */
+}
+
+@keyframes border-animate {
+    0% {
+        background-position: 0% 0;
+    }
+    50% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: 0% 0;
+    }
+}
+
+.custom-card {
+    cursor: pointer;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ccc;
+    background-color: #fff;
+}
+
+.custom-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+input[type="checkbox"]:checked + .custom-card {
+    background-color: #FF5535;
+    color: white;
+    font-weight: bold;
+    border-color: #FF5535;
+    box-shadow: 0 0 20px rgba(255, 85, 53, 0.6);
+    transform: scale(1.03);
+}
+
+.custom-card-body {
+    padding: 0.75rem;
+    text-align: center;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease-in-out;
+    color: inherit; /* Adopta el color del contenedor */
+}
+
+.custom-card:has(input[type="checkbox"]:checked) {
+    background-color: #FF5535;
+    color: white;
+    font-weight: bold;
+    border-color: #FF5535;
+    box-shadow: 0 0 20px rgba(255, 85, 53, 0.6);
+    transform: scale(1.03);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Estilo para la tarjeta de alergia personalizada */
+.custom-allergy-card {
+    background-color: #FF5535;
+    color: white;
+    font-weight: bold;
+    border-color: #FF5535;
+    box-shadow: 0 0 20px rgba(255, 85, 53, 0.6);
+    transform: scale(1.03);
+}
+
+.custom-allergy-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.4);
+}
+
+.custom-allergy-remove {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #dc3545;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    transition: color 0.2s;
+}
+
+.custom-allergy-remove:hover {
+    color: #b02a37;
+}
+
+.step {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.step.active {
+    opacity: 1;
+    transform: translateX(0);
+}

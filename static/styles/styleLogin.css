@@ -1,0 +1,78 @@
+html,
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.background {
+  background: linear-gradient(220deg,
+      #08a0d0 24%,
+      #07256c 48%,
+      #071963 71%,
+      #070d59 91%);
+}
+
+.login-btn {
+  background-color: #ff5535;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  width: 80%;
+}
+
+/* Contenedor de las imágenes */
+.carousel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+  height: 75vh;
+  /* Ajusta según el tamaño de tus imágenes */
+  position: relative;
+}
+
+/* Contenedor que contiene las imágenes en un bucle */
+.carousel-images {
+  display: flex;
+  justify-content: space-around;
+  transition: transform 0.1s linear;
+}
+
+
+/* Estilo de las imágenes */
+.imagescarrousel {
+  margin: 0 15px;
+}
+
+/* Estilos específicos para móviles */
+@media (max-width: 768px) {
+  /* Ocultar el carrusel en dispositivos móviles */
+  #recipeCarousel {
+    display: none !important;
+  }
+  
+  /* Centrar el login en pantalla completa */
+  .col-md-5 {
+    width: 100%;
+    box-shadow: none;
+    padding: 20px;
+  }
+
+  .login-btn {
+    width: 100%;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-label {
+    font-size: 0.9rem;
+  }
+}

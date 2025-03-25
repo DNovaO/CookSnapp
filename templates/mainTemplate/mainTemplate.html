@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookSnap</title>
+
+    <link rel="icon" href="{% static 'resources/cooksnap-logo.png' %}" alt="LyncottIcon" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"crossorigin="anonymous" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'styles/styleMain.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/styleCirculos.css' %}" />
+</head>
+
+<body class="background">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light p-3">
+        <!-- Logo -->
+        <a class="navbar-brand" href="{% url 'main' %}">
+            <img src="{% static 'resources/cooksnap-logo.png' %}" alt="Cooksnap Logo" 
+                class="hexagon-img" style="min-width:150px; height:auto;" />
+        </a>
+
+        <!-- Toggler button for mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar content -->
+        <div class="collapse navbar-collapse" id="navbarNav" >
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item">
+                    <h1 class="nav-link mb-0 text-center text-lg-start fw-bold fs-5 text-dark">
+                        Welcome <span style="color:#FF5535">{{ user.username }}</span>! Ready to start cooking?
+                    </h1>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul class="circles">
+        {% for _ in "12345678901234567890"%}
+        <li></li>
+        {% endfor %}
+    </ul>
+
+    <p class="text-muted justify-content-center text-center" style="font-weight:500;">Fase pre-alpha</p>
+
+    <div class="container py-4">
+        <div class="row g-4">
+            <!-- Large Card -->
+            <div class="col-12 col-md-6">
+                <a href="{% url 'photo' %}" class="card text-decoration-none h-100 custom-card shadow-lg">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                        <i class="bi bi-plus-circle-fill custom-icon mb-3" style="font-size: 4rem;"></i>
+                        <h5 class="card-title fw-bold" style="font-size: 2rem;">Take a Photo</h5> 
+                    </div>
+                </a>
+            </div>
+
+
+            <!-- Column with 3 larger, centered cards -->
+            <div class="col-12 col-md-6 d-flex flex-column justify-content-between">
+                <a href="{% url 'saved_recipes' %}" class="card text-decoration-none custom-card shadow-lg mb-4">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                        <i class="bi bi-folder-fill custom-icon mb-2"></i>
+                        <h5 class="card-title fw-bold">Saved Recipes</h5>
+                    </div>
+                </a>
+                <a href="{% url 'explore_recipes' %}" class="card text-decoration-none custom-card shadow-lg mb-4">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                        <i class="bi bi-search custom-icon mb-2"></i>
+                        <h5 class="card-title fw-bold">Explore Recipes</h5>
+                    </div>
+                </a>
+                <a href="{% url 'groceries' %}" class="card text-decoration-none custom-card shadow-lg">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                        <i class="bi bi-basket-fill custom-icon mb-2"></i>
+                        <h5 class="card-title fw-bold">Groceries</h5>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        crossorigin="anonymous">
+    </script>
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous">
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+            jQuery(".container-wrap").append(
+                "<ul class='circles'><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>"
+            );
+        });
+    </script>
+</body>
+</html>
