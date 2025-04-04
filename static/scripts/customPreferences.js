@@ -1,101 +1,143 @@
 let currentStep = 1;
-const totalSteps = 4;
+const totalSteps = 3;
+
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const submitBtn = document.getElementById('submitBtn');
+const progressBar = document.getElementById('progressBar');
+const lowCaloriesCheckbox = document.getElementById('lowCalories');
+const highProteinCheckbox = document.getElementById('highProtein');
+const customAllergyInput = document.getElementById('customAllergy');
+const customAllergiesList = document.getElementById('customAllergiesList');
 
 function updateSteps() {
     document.querySelectorAll('.step').forEach((step, index) => {
-        if (index + 1 === currentStep) {
-            step.classList.remove('d-none');
-            setTimeout(() => {
-                step.classList.add('active');
-            }, 10);
-        } else {
-            step.classList.remove('active');
-            setTimeout(() => {
-                step.classList.add('d-none');
-            }, 500); // Espera la duración de la transición
-        }
+        step.classList.toggle('d-none', index + 1 !== currentStep);
     });
-
-    // Mostrar/ocultar botones
-    document.getElementById('prevBtn').classList.toggle('d-none', currentStep === 1);
-    document.getElementById('nextBtn').classList.toggle('d-none', currentStep === totalSteps);
-    document.getElementById('submitBtn').classList.toggle('d-none', currentStep < totalSteps);
+    prevBtn.classList.toggle('d-none', currentStep === 1);
+    nextBtn.classList.toggle('d-none', currentStep === totalSteps);
+    submitBtn.classList.toggle('d-none', currentStep < totalSteps);
+    updateProgressBar();
 }
 
-// Evento para botón "Next"
-document.getElementById('nextBtn').addEventListener('click', () => {
+function updateProgressBar() {
+    const progress = Math.round((currentStep / totalSteps) * 100);
+    progressBar.style.width = `${progress}%`;
+    progressBar.setAttribute('aria-valuenow', progress);
+    progressBar.textContent = `Step ${currentStep} of ${totalSteps}`;
+}
+
+function generateSummary() {
+    const getCheckedValues = (name) =>
+        [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(cb => cb.value).join(', ') || 'None';
+
+    document.getElementById('summaryAllergies').textContent = getCheckedValues('allergies');
+    document.getElementById('summaryNutrition').textContent = getCheckedValues('nutrition');
+    document.getElementById('summaryCookingLevel').textContent = document.getElementById('cookingLevel').value || 'None';
+}
+
+function addAllergy() {
+    const allergyName = customAllergyInput.value.trim();
+    if (!allergyName) {
+        alert('Please enter an allergy.');
+        return;
+    }
+
+    const allergyCard = document.createElement('div');
+    allergyCard.classList.add('col-auto');
+    allergyCard.innerHTML = `
+        <label class="custom-card custom-allergy-card">
+            <input type="checkbox" class="form-check-input d-none" name="allergies" value="${allergyName}" checked>
+            <div class="custom-card-body">
+                ${allergyName}
+                <span class="custom-allergy-remove" onclick="removeAllergy(this)">✖</span>
+            </div>
+        </label>`;
+    customAllergiesList.appendChild(allergyCard);
+    customAllergyInput.value = '';
+}
+
+function removeAllergy(element) {
+    element.closest('.col-auto').remove();
+}
+
+function toggleExclusiveCheckboxes(checkbox1, checkbox2) {
+    checkbox1.addEventListener('change', () => {
+        if (checkbox1.checked) checkbox2.checked = false;
+    });
+    checkbox2.addEventListener('change', () => {
+        if (checkbox2.checked) checkbox1.checked = false;
+    });
+}
+
+// Event Listeners
+nextBtn.addEventListener('click', () => {
     if (currentStep < totalSteps) {
         currentStep++;
         updateSteps();
+        if (currentStep === totalSteps) generateSummary();
     }
 });
 
-// Evento para botón "Previous"
-document.getElementById('prevBtn').addEventListener('click', () => {
+prevBtn.addEventListener('click', () => {
     if (currentStep > 1) {
         currentStep--;
         updateSteps();
     }
 });
 
-// Mostrar paso inicial
+document.getElementById('submitBtn').addEventListener('click', function () {
+    // Esperar la respuesta antes de mostrar mensaje
+    sendPreferencesToServer();
+});
+
+function sendPreferencesToServer() {
+    console.log('Sending preferences to server...');
+
+    // Mover la función getCheckedValues aquí
+    const getCheckedValues = (name) =>
+        [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(cb => cb.value).join(', ') || 'None';
+
+    const body = {
+        allergies: getCheckedValues('allergies'),
+        nutrition: getCheckedValues('nutrition'),
+        cookingLevel: document.getElementById('cookingLevel').value,
+    };
+    console.log(body);
+
+    fetch("/main/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCSRFToken(),
+        },
+        body: JSON.stringify(body),
+    }).then(response => {
+        if (response.ok) {
+            // Mostrar mensaje de éxito
+            document.getElementById('successMessage').classList.remove('d-none');
+            document.getElementById('submitBtn').classList.add('d-none');
+            document.querySelector('.step').classList.add('d-none');
+            console.log("Preferences sent successfully!");
+        } else {
+            alert("Error sending preferences.");
+        }
+    }).catch(error => {
+        console.error("Error:", error);
+    });
+
+    function getCSRFToken() {
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+            const [name, value] = cookie.trim().split("=");
+            if (name === "csrftoken") {
+                return value;
+            }
+        }
+        return "";
+    }
+}
+
+document.getElementById('addAllergyBtn').addEventListener('click', addAllergy);
+toggleExclusiveCheckboxes(lowCaloriesCheckbox, highProteinCheckbox);
 updateSteps();
-
-function generateSummary() {
-    // 1. Capturar alergias seleccionadas
-    const allergyCheckboxes = document.querySelectorAll('input[name="allergies"]:checked');
-    const allergies = Array.from(allergyCheckboxes).map(cb => cb.value).join(', ') || 'None';
-    document.getElementById('summaryAllergies').textContent = allergies;
-
-    // 2. Capturar objetivos nutricionales
-    const nutritionCheckboxes = document.querySelectorAll('input[name="nutrition"]:checked');
-    const nutrition = Array.from(nutritionCheckboxes).map(cb => cb.value).join(', ') || 'None';
-    document.getElementById('summaryNutrition').textContent = nutrition;
-
-    // 3. Capturar nivel de cocina
-    const cookingLevel = document.getElementById('cookingLevel').value || 'None';
-    document.getElementById('summaryCookingLevel').textContent = cookingLevel;
-}
-
-// Llamar a la función cuando se llegue al paso 4
-document.getElementById('nextBtn').addEventListener('click', () => {
-    if (currentStep === 4) {
-        generateSummary();
-    }
-});
-
-document.getElementById('submitBtn').addEventListener('click', function() {
-    alert('OK! Preferences saved successfully.');
-    window.location.href = "{% url 'main' %}"; 
-});
-
-document.getElementById('addAllergyBtn').addEventListener('click', () => {
-    const input = document.getElementById('customAllergy');
-    const allergyName = input.value.trim();
-
-    if (allergyName) {
-        const container = document.getElementById('customAllergiesList');
-
-        // Crear el elemento de tarjeta personalizada
-        const allergyCard = document.createElement('div');
-        allergyCard.classList.add('col-6', 'col-md-4', 'col-lg-3');
-        allergyCard.innerHTML = `
-          <label class="custom-card custom-allergy-card">
-              <input type="checkbox" class="form-check-input d-none" name="allergies" value="${allergyName}" checked>
-              <div class="custom-card-body justify-content-right">
-                  ${allergyName}
-                  <span class="custom-allergy-remove" onclick="removeAllergy(this)">✖</span>
-              </div>
-          </label>
-      `;
-
-        container.appendChild(allergyCard);
-        input.value = ''; // Limpiar campo
-    } else {
-        alert('Please enter an allergy.');
-    }
-});
-
-function removeAllergy(element) {
-    element.closest('.col-6').remove();
-}

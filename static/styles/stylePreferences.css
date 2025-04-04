@@ -10,6 +10,7 @@ body {
     position: relative;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1;
+    background-color: #ffffff;
     border-bottom: 1px solid transparent;
 }
 
@@ -243,6 +244,45 @@ body {
     }
 }
 
+/* Barra de progreso */
+.progress {
+    height: 20px;
+    background-color: #f3f3f3;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+/* Barra de progreso con animación de rotación de colores */
+.progress-bar {
+    height: 100%;
+    background:linear-gradient(220deg,
+        #08a0d0 24%,
+        #07256c 48%,
+        #071963 71%,
+        #070d59 91%);
+    background-size: 200% 200%;
+    animation: colorRotation 5s linear infinite; /* Animación de rotación */
+    width: 0%; /* Puede ajustarse según el progreso */
+    transition: width 0.6s ease-in-out;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+/* Animación para rotar los colores */
+@keyframes colorRotation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+
 .custom-card {
     cursor: pointer;
     border-radius: 0.5rem;
@@ -322,10 +362,112 @@ input[type="checkbox"]:checked + .custom-card {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
 }
 
 .step.active {
     opacity: 1;
     transform: translateX(0);
+}
+
+/* Fondo y bordes con sombras */
+fieldset {
+    background-color: #f0f8ff;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+}
+
+/* Hover sobre las opciones */
+input[type="checkbox"]:hover + label,
+label:hover {
+    background-color: #e9f7fd;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+/* Mejorar el diseño de las etiquetas */
+label {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+#summary {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+#summary:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#summary h5 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #000000;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+#summary ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#summary ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between; /* Alineación de los elementos */
+    align-items: left;
+}
+
+#summary ul li:last-child {
+    border-bottom: none; /* Remove border from last item */
+}
+
+#summary ul li strong {
+    font-weight: 600;
+    color: #333;
+    margin-right: 15px; /* Agregar margen entre el strong y el span */
+    width: 150px; /* Fijamos un ancho para las etiquetas */
+}
+
+#summary ul li span {
+    font-weight: 500;
+    color: #555;
+    font-style: italic;
+    text-align: left; /* Aseguramos que el texto esté alineado a la izquierda */
+    flex-grow: 1; /* Hace que el span ocupe el espacio restante */
+}
+
+#summary ul li span#summaryAllergies {
+    color: #d9534f; /* Red for allergies */
+}
+
+#summary ul li span#summaryNutrition {
+    color: #5bc0de; /* Blue for nutritional goals */
+}
+
+#summary ul li span#summaryCookingLevel {
+    color: #f0ad4e; /* Yellow for cooking level */
+}
+
+#summary ul li:hover {
+    background-color: #e9f7fd;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+#summary h4 {
+    font-size: 1.75rem;
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 20px;
 }
