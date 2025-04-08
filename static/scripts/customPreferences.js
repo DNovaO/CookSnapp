@@ -86,8 +86,9 @@ prevBtn.addEventListener('click', () => {
     }
 });
 
-document.getElementById('submitBtn').addEventListener('click', function () {
+document.getElementById('submitBtn').addEventListener('click', function (e) {
     // Esperar la respuesta antes de mostrar mensaje
+    e.preventDefault(); // Prevenir el comportamiento por defecto del botón
     sendPreferencesToServer();
 });
 
@@ -118,7 +119,12 @@ function sendPreferencesToServer() {
             document.getElementById('successMessage').classList.remove('d-none');
             document.getElementById('submitBtn').classList.add('d-none');
             document.querySelector('.step').classList.add('d-none');
-            console.log("Preferences sent successfully!");
+
+            // Redirigir después de 2 segundos
+            setTimeout(() => {
+                window.location.href = "/main/";
+            }, 2000);
+
         } else {
             alert("Error sending preferences.");
         }

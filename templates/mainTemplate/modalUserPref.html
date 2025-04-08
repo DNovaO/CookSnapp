@@ -1,0 +1,67 @@
+<!-- Modal -->
+<div class="modal fade" id="userSettingsModal" tabindex="-1" aria-labelledby="userSettingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        
+        <div class="modal-header">
+          <h5 class="modal-title" id="userSettingsModalLabel">User Settings</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        
+        <div class="modal-body d-flex p-0">
+          <!-- Left submenu -->
+          <div class="list-group list-group-flush border-end col-4" id="settings-menu" role="tablist">
+            <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#cooking-level" role="tab">Cooking Level</a>
+            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#nutritional-info" role="tab">Nutritional Info</a>
+            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#allergies" role="tab">Allergies</a>
+          </div>
+  
+          <!-- Right content area -->
+          <div class="tab-content p-4 col-8">
+            
+            <!-- Cooking Level -->
+            <div class="tab-pane fade show active" id="cooking-level" role="tabpanel">
+              <h6>Cooking Level</h6>
+              <select class="form-select mt-2" name="cooking_level">
+                <option value="beginner" {% if user_preferences.cooking_level == 'beginner' %}selected{% endif %}>Beginner</option>
+                <option value="intermediate" {% if user_preferences.cooking_level == 'intermediate' %}selected{% endif %}>Intermediate</option>
+                <option value="advanced" {% if user_preferences.cooking_level == 'advanced' %}selected{% endif %}>Advanced</option>
+              </select>
+            </div>
+  
+            <!-- Nutritional Goals -->
+            <div class="tab-pane fade" id="nutritional-info" role="tabpanel">
+              <h6>Nutritional Goals</h6>
+              <select class="form-select mt-2" name="nutritional_goal">
+                <option value="weight_loss" {% if user_preferences.nutritional_goal == 'weight_loss' %}selected{% endif %}>Weight Loss</option>
+                <option value="maintenance" {% if user_preferences.nutritional_goal == 'maintenance' %}selected{% endif %}>Maintenance</option>
+                <option value="muscle_gain" {% if user_preferences.nutritional_goal == 'muscle_gain' %}selected{% endif %}>Muscle Gain</option>
+              </select>
+            </div>
+  
+            <!-- Allergies -->
+            <div class="tab-pane fade" id="allergies" role="tabpanel">
+              <h6>Allergies</h6>
+         
+                <div class="form-check mt-2">
+                  <input class="form-check-input" type="checkbox" name="allergies" value="{{ allergy }}" id="allergy-{{ allergy }}" 
+                         {% if allergy in user_preferences.allergies %}checked{% endif %}>
+                  <label class="form-check-label" for="allergy-{{ allergy }}">
+                    {{ allergy|title }}
+                  </label>
+                </div>
+      
+            </div>
+  
+          </div>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  

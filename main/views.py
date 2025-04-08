@@ -6,19 +6,16 @@ import json
 @login_required
 def main_view(request):
     if request.method == 'POST':
-        # Actualiza el campo new_user a 0
+        if request.content_type == 'application/json':
+            data = json.loads(request.body)
+        else:
+            data = request.POST
+
         with connection.cursor() as cursor:
             query = """
                 UPDATE auth_user SET new_user = 0 WHERE username = %s
             """
-
-            cursor.execute(
-                query,
-                [request.user.username]
-            )
-
-        # Si el frontend usa fetch con JSON
-        data = json.loads(request.body)
+            cursor.execute(query, [request.user.username])
 
         insertPreferences(data, request.user.id)
         return redirect('main')
@@ -52,14 +49,13 @@ def insertPreferences(data, user_id):
     """
     allergies = data.get('allergies', [])
     nutrition = data.get('nutrition', [])
-    cooking_level = data.get('cookingLevel', '')  # Cambié a '' en vez de []
+    cooking_level = data.get('cookingLevel', '')
 
     if isinstance(allergies, list):
         allergies = ','.join(allergies)
     if isinstance(nutrition, list):
         nutrition = ','.join(nutrition)
 
-    # Aquí no es necesario hacer el join si `cooking_level` ya es una cadena
     if not cooking_level:  # Si el cooking_level está vacío, asigna un valor predeterminado
         cooking_level = 'Beginner'  # O el valor que consideres apropiado
 
@@ -75,7 +71,7 @@ def insertPreferences(data, user_id):
                 allergies = EXCLUDED.allergies,
                 nutrition = EXCLUDED.nutrition,
                 cooking_level = EXCLUDED.cooking_level
-        """    
+        """         
         
         cursor.execute(
             query,
