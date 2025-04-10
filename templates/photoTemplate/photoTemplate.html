@@ -29,6 +29,8 @@
   </head>
 
   <body class="background">
+    {% csrf_token %}
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light p-3">
       <!-- Logo -->
@@ -141,6 +143,7 @@
           <canvas id="photoCanvas" class="camera-view"></canvas>
           <button id="takePhoto">Tomar Foto</button>
           <button id="retakePhoto">Tomar Otra Foto</button>
+          <button id="usePhoto" style="display: none;">Usar Foto</button>
         </div>
       </div>
 

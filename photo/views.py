@@ -1,8 +1,9 @@
-"""
-version 1.0 - 22/11/2024 - Aguilar Velázquez Marco Antonio:
-    Inicia un método de vista que permite a los usuarios iniciar su cámara en la aplicación.
-    Direccioa al apartado de la cámara para que el usuario pueda capturar diferente información.
-"""
+import base64
+from ultralytics import YOLO
+from PIL import Image
+import io
+import numpy as np
+from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -63,3 +64,32 @@ def process_ingredients(request):
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+# Cargar modelo YOLOv8 
+yolo_model = YOLO("yolov8n.pt") #dataset cocoa por el momento
+
+@csrf_exempt
+def detect_objects(request): # nueva vista para detectar objetos
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            image_data = data.get('image')
+
+            if not image_data:
+                return JsonResponse({'error': 'No image data received'}, status=400)
+
+            # Decodificar imagen 
+            header, encoded = image_data.split(",", 1)
+            img_bytes = base64.b64decode(encoded)
+            img = Image.open(io.BytesIO(img_bytes)).convert("RGB")
+            img_np = np.array(img)
+
+            # Procesar con YOLOv8
+            results = yolo_model(img_np)[0]
+            detected = [yolo_model.names[int(cls)] for cls in results.boxes.cls]
+
+            return JsonResponse({'ingredients': list(set(detected))})
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    return JsonResponse({'error': 'Invalid method'}, status=400)

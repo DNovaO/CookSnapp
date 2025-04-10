@@ -44,15 +44,18 @@ document.addEventListener("DOMContentLoaded", function () {
   
     // Obtener el token CSRF
     function getCSRFToken() {
-      const cookies = document.cookie.split(";");
-      for (let cookie of cookies) {
-        const [name, value] = cookie.trim().split("=");
-        if (name === "csrftoken") {
-          return value;
+      const name = "csrftoken=";
+      const decodedCookie = decodeURIComponent(document.cookie);
+      const cookies = decodedCookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        let c = cookies[i].trim();
+        if (c.startsWith(name)) {
+          return c.substring(name.length, c.length);
         }
       }
       return "";
     }
+    
   });
 
 
