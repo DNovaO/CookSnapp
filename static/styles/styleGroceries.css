@@ -270,3 +270,41 @@ video {
   border: none;
   border-radius: 5px;
 }
+
+.recipe-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.recipe-card h2,
+.recipe-card h3 {
+  color: #ff5535;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.recipe-card p.recipe-description {
+  font-style: italic;
+  color: #666;
+}
+
+.recipe-card ul,
+.recipe-card ol {
+  padding-left: 20px;
+}
+
+.recipe-card li {
+  margin-bottom: 8px;
+}
+
+.step {
+  display: none;
+  transition: opacity 0.3s ease;
+}
+
+.step.active {
+  display: block;
+}
