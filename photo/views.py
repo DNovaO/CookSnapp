@@ -1,7 +1,7 @@
 """
-version 1.0 - 22/11/2024 - Aguilar Velázquez Marco Antonio:
+version 1.0 - 22/11/2024 - Diego Nova Olguin:
     Inicia un método de vista que permite a los usuarios iniciar su cámara en la aplicación.
-    Direccioa al apartado de la cámara para que el usuario pueda capturar diferente información.
+    Direccion al apartado de la cámara para que el usuario pueda capturar diferente información.
 """
 import json
 from django.http import JsonResponse
@@ -31,19 +31,32 @@ def generate_recipe(ingredients):
     inputs = tokenizer.encode(prompt, return_tensors="pt")
 
     # Generar el texto
-    output = model.generate(
-        inputs,
-        max_length=300,
-        num_return_sequences=1,
-        no_repeat_ngram_size=2,
-        pad_token_id=tokenizer.eos_token_id,
-    )
+    # output = model.generate(
+    #     inputs,
+    #     max_length=300,
+    #     num_return_sequences=1,
+    #     no_repeat_ngram_size=2,
+    #     pad_token_id=tokenizer.eos_token_id,
+    # )
 
-    # Decodificar el resultado generado
-    generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
+    # # Decodificar el resultado generado
+    # generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
 
-    # Extraer la receta eliminando el prompt inicial
-    recipe = generated_text[len(prompt):].strip()
+    # # Extraer la receta eliminando el prompt inicial
+    # recipe = generated_text[len(prompt):].strip()
+
+    recipe = " Delicious Recipe Title\n" \
+            "Description: A delightful dish made with the freshest ingredients.\n" \
+            "Ingredients:\n" \
+            "1. Ingredient 1\n" \
+            "2. Ingredient 2\n" \
+            "3. Ingredient 3\n" \
+            "Instructions:\n" \
+            "1. Step 1: Prepare the ingredients.\n" \
+            "2. Step 2: Cook the ingredients together.\n" \
+            "3. Step 3: Serve the dish hot.\n" \
+            "4. Step 4: Enjoy your meal!\n"
+    
     return recipe
 
 def process_ingredients(request):

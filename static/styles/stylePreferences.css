@@ -334,7 +334,7 @@ input[type="checkbox"]:checked + .custom-card {
     color: white;
     font-weight: bold;
     border-color: #FF5535;
-    box-shadow: 0 0 20px rgba(255, 85, 53, 0.6);
+    box-shadow: 0 0 10px rgba(255, 85, 53, 0.6);
     transform: scale(1.03);
 }
 
@@ -558,3 +558,10 @@ label {
     background-color: #070d59;
     color: white;
 }
+
+.modal-content-tall {
+    height: 80vh; /* Ajusta este valor a lo que necesites */
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  

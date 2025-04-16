@@ -201,22 +201,38 @@ color: #FF5535;
 
 
 /* Estilo de los íconos */
+/* Íconos con delineado */
 .custom-icon {
-    font-size: 2.5rem; /* Íconos más grandes */
-    color: #070d59; /* Azul oscuro por defecto */
+    font-size: 2.5rem;
+    color: #070d59;
     transition: color 0.3s ease;
+
+    /* Delineado blanco */
+    text-shadow:
+        -1px -1px 0 #ffffff,
+         1px -1px 0 #ffffff,
+        -1px  1px 0 #ffffff,
+         1px  1px 0 #ffffff;
 }
 
 /* Cambiar el color del ícono en hover */
 .custom-card:hover .custom-icon {
-    color: #ffffff; /* Cambiar el ícono a blanco */
+    color: #ffffff;
+    text-shadow: none; /* Opcional: quitar el delineado en hover */
 }
 
-/* Títulos y textos */
+/* Títulos y textos con delineado */
 .custom-card .card-title {
-    font-size: 1.4rem; /* Texto más grande */
-    color: #070d59; /* Azul oscuro por defecto */
+    font-size: 1.5rem;
+    color: #070d59;
     transition: color 0.3s ease;
+
+    /* Delineado blanco */
+    text-shadow:
+        -1px -1px 0 #ffffff,
+         1px -1px 0 #ffffff,
+        -1px  1px 0 #ffffff,
+         1px  1px 0 #ffffff;
 }
 
 .custom-card .card-text {
@@ -229,17 +245,70 @@ color: #FF5535;
 .custom-card:hover .card-title, 
 .custom-card:hover .card-text {
     color: #ffffff; /* Cambiar texto a blanco */
+    text-shadow: none;
 }
 
-/* Ajustes responsivos */
 @media (max-width: 768px) {
     .custom-card {
-        height: 200px; /* Reducir altura en pantallas pequeñas */
+        min-height: 150px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
-    .custom-icon {
-        font-size: 2rem; /* Ajustar íconos */
+
+    .custom-card .card-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
-    .custom-card .card-title {
-        font-size: 1.2rem;
-    }
+}
+
+.card-photo {
+    position: relative;
+    width: 100%; /* Toma todo el ancho disponible */
+    aspect-ratio: 16 / 9; /* Mantiene una proporción responsive */
+    overflow: hidden; /* Oculta cualquier desbordamiento */
+}
+
+.card-photo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/static/resources/ingredients2.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+    z-index: 0;
+}
+
+.card-photo:hover::before {
+    opacity: 0;
+}
+
+.card-photo .card-body {
+    position: relative;
+    z-index: 1;
+    padding: 1rem; /* Ajustable según necesidad */
+}
+
+.card-bg {
+    background-image: url("/static/resources/ingredients4.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%; /* Asegura que todas las cards tengan la misma altura */
+    border: none; /* Opcional: quita el borde para mejor integración */
+
+}
+
+.bg-ingredients {
+    background-image: url("/static/resources/ingredients4.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: scaleX(-1);
 }
