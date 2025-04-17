@@ -3,7 +3,7 @@ let stream;
 async function startCamera() {
     try {
         stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: { exact: "environment" } } // Usa la cámara trasera
+            video: { facingMode: { ideal: "environment" } } // Usa la cámara trasera
         });
         
         document.getElementById("video").srcObject = stream;

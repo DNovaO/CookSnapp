@@ -5,10 +5,13 @@ version 1.0 - 22/11/2024 - Diego Nova Olguin:
 """
 import json
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
-from transformers import AutoTokenizer, AutoModelForCausalLM    # pip install transformers
+from transformers import AutoTokenizer, AutoModelForCausalLM   
+import sqlite3
+from django.conf import settings
 
-
+@csrf_exempt
 def photo(request):
     return render(request, 'photoTemplate/photoTemplate.html')
 
@@ -45,7 +48,7 @@ def generate_recipe(ingredients):
     # # Extraer la receta eliminando el prompt inicial
     # recipe = generated_text[len(prompt):].strip()
 
-    recipe = " Delicious Recipe Title\n" \
+    recipe = " Chocolate cookies\n" \
             "Description: A delightful dish made with the freshest ingredients.\n" \
             "Ingredients:\n" \
             "1. Ingredient 1\n" \
@@ -76,3 +79,24 @@ def process_ingredients(request):
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+# vista para guardar las recetas en la tabla userSavedRecipes
+
+def save_recipe(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        title = data.get("title", "Untitled Recipe")
+        steps = data.get("steps", "")
+        username = request.user.username
+
+        conn = sqlite3.connect(settings.BASE_DIR / 'db.sqlite3')
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO userSavedRecipes (title, steps, username)
+            VALUES (?, ?, ?)
+        """, (title, steps, username))
+        conn.commit()
+        conn.close()
+
+        return JsonResponse({"message": "Receta guardada con éxito"})

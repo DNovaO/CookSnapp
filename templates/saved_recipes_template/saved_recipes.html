@@ -76,20 +76,26 @@
             <table class="table floating-table">
                 <thead>
                     <tr>
-                        <th scope="col">Recipe Name</th>
-                        <th scope="col">Category</th>
+                        <th>#</th>
+                        <th>Recipe Title</th>
+                        <th>Date Saved</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for recipe in saved_recipes %}
                     <tr>
-                        <th scope="row">{{ forloop.counter }}</th>
-                        <td>{{ recipe.name }}</td>
-                        <td>{{ recipe.category }}</td>
+                        <td>{{ forloop.counter }}</td>
                         <td>
-                            <a href="{% url 'recipe_detail' recipe.id %}" class="btn btn-primary">Show</a>
-                            <a href="{% url 'delete_recipe' recipe.id %}" class="btn btn-danger">Delete</a>
+                            <a href="#" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#recipeModal"
+                               data-title="{{ recipe.title }}" data-steps="{{ recipe.steps|escapejs }}">
+                                {{ recipe.title }}
+                            </a>
                         </td>
+                        <td>{{ recipe.date }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center">No recipes saved yet.</td>
                     </tr>
                     {% endfor %}
                 </tbody>
