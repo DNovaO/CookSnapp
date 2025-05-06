@@ -75,7 +75,6 @@ def insertPreferences(data, user_id):
                 cooking_level = EXCLUDED.cooking_level
         """, [user_id, allergies, nutrition, cooking_level])
 
-
 def getPreferences(request):
     """
     Obtener las preferencias del usuario desde la tabla userPreferences.

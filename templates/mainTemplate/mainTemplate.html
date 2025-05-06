@@ -27,23 +27,32 @@
             <img src="{% static 'resources/cooksnap-logo.png' %}" alt="Cooksnap Logo" 
                 class="hexagon-img" style="min-width:150px; height:auto;" />
         </a>
-
+    
         <!-- Toggler button for mobile -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
+    
         <!-- Navbar content -->
         <div class="collapse navbar-collapse" id="navbarNav" >
             <ul class="navbar-nav ms-auto align-items-center">
-                <li class="nav-item">
+                <li class="nav-item me-3">
                     <h1 class="nav-link mb-0 text-center text-lg-start fw-bold fs-5 text-dark">
                         Welcome <span style="color:#FF5535">{{ user.username }}</span>! Ready to start cooking?
                     </h1>
                 </li>
+                <li class="nav-item">
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger" type="submit">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </button>
+                    </form>
+                </li>
             </ul>
         </div>
     </nav>
+    
 
     <ul class="circles">
         {% for _ in "12345678901234567890"%}
@@ -53,7 +62,7 @@
 
     <p class="text-muted justify-content-center text-center" style="font-weight:500;">Fase pre-alpha</p>
 
-    <div class="container py-4">
+    <div class="container">
         <div class="row g-4">
             <!-- Large Card -->
             <div class="col-12 col-md-6">
@@ -96,20 +105,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
         crossorigin="anonymous">
     </script>
-   
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        crossorigin="anonymous">
-    </script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        jQuery(document).ready(function () {
-            jQuery(".container-wrap").append(
-                "<ul class='circles'><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>"
-            );
-        });
-
         document.addEventListener("DOMContentLoaded", function () {
             const settingsBtn = document.getElementById("openUserSettings");
             const modal = new bootstrap.Modal(document.getElementById("userSettingsModal"));
