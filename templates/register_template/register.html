@@ -38,11 +38,11 @@
             <form method="post" action="{% url 'register' %}">
                 {% csrf_token %}
                 <div class="mb-3 text-start">
-                    <label for="username" class="form-label">Username:</label>
-                    <label for="username" class="form-label">Username:</label>
+                    <label style="font-weight:600;" for="username" class="form-label">Username:</label>
                     <input type="text" id="username" name="username" class="form-control" 
                         placeholder="Enter your username..." autocomplete="username" 
                         pattern="^[a-zA-Z0-9_]+$" 
+                        style="border-color: #070D59; border-width: 2px;"
                         title="Username must only contain letters, numbers, or underscores (no spaces or special characters)" 
                         required>
                     <div id="usernameError" class="text-danger mt-1" style="display: none;">
@@ -50,27 +50,29 @@
                     </div>
 
                     
-                    <label for="email" class="form-label">Email:</label>
+                    <label style="font-weight:600;" for="email" class="form-label">Email:</label>
                     <input type="email" id="email" name="email" class="form-control" 
-                           placeholder="Enter your email..." autocomplete="email" required>
+                           placeholder="Enter your email..." style="border-color: #070D59; border-width: 2px;" autocomplete="email" required>
             
                     
                     <!-- Password input con toggle -->
-                    <label for="password" class="form-label">Password:</label>
+                    <label style="font-weight:600;" for="password" class="form-label">Password:</label>
                     <div class="input-group">
                         <input type="password" id="password" name="password" class="form-control"
-                            placeholder="Enter your password..." autocomplete="new-password" required>
-                        <button type="button" class="btn btn-outline-secondary" id="togglePassword">
+                            placeholder="Enter your password..." style="border-color: #070D59; border-width: 2px;" autocomplete="new-password" required>
+                        <button type="button"  style="background-color:white; border-color: #070D59; border-width: 2px; color: #6c757d;" class="btn btn-outline-secondary" id="togglePassword"                               onmouseover="this.style.backgroundColor='#070D59'; this.style.color='white';"
+                        onmouseout="this.style.backgroundColor='white'; this.style.color='#6c757d';">
                             <i class="bi bi-eye"></i>
                         </button>
                     </div>
 
                     <!-- Confirm password input con toggle -->
-                    <label for="password_confirmation" class="form-label mt-2">Confirm Password:</label>
+                    <label style="font-weight:600;" for="password_confirmation" class="form-label mt-2">Confirm Password:</label>
                     <div class="input-group">
                         <input type="password" id="password_confirmation" name="password_confirmation" class="form-control"
-                            placeholder="Confirm your password..." autocomplete="new-password" required>
-                        <button type="button" class="btn btn-outline-secondary" id="togglePasswordConfirmation">
+                            placeholder="Confirm your password..." style="border-color: #070D59; border-width: 2px;" autocomplete="new-password" required>
+                        <button type="button"  style="background-color:white; border-color: #070D59; border-width: 2px; color: #6c757d;" class="btn btn-outline-secondary" id="togglePasswordConfirmation"                               onmouseover="this.style.backgroundColor='#070D59'; this.style.color='white';"
+                        onmouseout="this.style.backgroundColor='white'; this.style.color='#6c757d';">
                             <i class="bi bi-eye"></i>
                         </button>
                     </div>
