@@ -328,3 +328,53 @@ video {
   background-color: #fff2e6;
   outline: none;
 }
+
+.card:hover {
+  transform: scale(1.02);
+  transition: all 0.2s ease-in-out;
+}
+
+.list-group-item input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+  color: #6c757d;
+}
+
+.search-btn {
+    background-color: #FF5535;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.search-btn:hover {
+    background-color: #d14a1b;
+    color: white;
+}
+
+.btn-enviar {
+  background-color: #2669b1;
+  color: white;
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-enviar:hover {
+    background-color: #091179;
+    color: white;
+}
+
+#fullscreenLoader .loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.85);
+  z-index: 1050; /* encima de modales */
+}

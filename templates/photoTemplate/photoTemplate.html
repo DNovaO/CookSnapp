@@ -11,17 +11,13 @@
 
     <!-- Bootstrap and Icons -->
     <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    />
+      rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
-    />
+      rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"/>
     <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
+      href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'styles/styleGroceries.css' %}" />
@@ -33,42 +29,35 @@
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light p-3">
-      <!-- Logo -->
-      <a class="navbar-brand" href="{% url 'main' %}">
-        <img
-          src="{% static 'resources/cooksnap-logo.png' %}"
-          alt="Cooksnap Logo"
-          class="hexagon-img"
-          style="min-width: 150px; height: auto"
-        />
-      </a>
-
-      <!-- Toggler button for mobile -->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Navbar content -->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto align-items-center">
-          <li class="nav-item">
-            <h1
-              class="nav-link mb-0 text-center text-lg-start fw-bold fs-5 text-dark"
-            >
-              Welcome <span style="color: #ff5535">{{ user.username }}</span>!
-              Ready to start cooking?
-            </h1>
-          </li>
-        </ul>
-      </div>
+        <!-- Logo -->
+        <a class="navbar-brand" href="{% url 'main' %}">
+            <img src="{% static 'resources/cooksnap-logo.png' %}" alt="Cooksnap Logo" 
+                class="hexagon-img" style="min-width:150px; height:auto;" />
+        </a>
+    
+        <!-- Toggler button for mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <!-- Navbar content -->
+        <div class="collapse navbar-collapse" id="navbarNav" >
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item me-3">
+                    <h1 class="nav-link mb-0 text-center text-lg-start fw-bold fs-5 text-dark">
+                        Welcome <span style="color:#FF5535">{{ user.username }}</span>! Ready to start cooking?
+                    </h1>
+                </li>
+                <li class="nav-item">
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger" type="submit">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
     </nav>
 
     <ul class="circles">
@@ -100,9 +89,11 @@
       style="margin: 0 auto"
     >
       <!-- Title -->
-      <h1 class="mt-3 mb-4">
+      <span id="username" style="display: none;">{{ user.username }}</span>
+      <h1 id="greeting" class="mt-3 mb-4">
         Let's <span style="color: #ff5535">cook</span> something!
       </h1>
+
 
       <div class="row align-items-center mb-3 mt-3">
         <div class="col-md-4 mb-4 position-relative">
@@ -172,26 +163,43 @@
       <div id="recipeContainer" class="mt-4"></div>
     </div>
 
-      
-    <!-- receta  Modal -->
-    <div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content recipe-card">
+    <div class="modal fade" id="recipeSelectionModal" tabindex="-1" aria-labelledby="recipeSelectionModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="recipeModalLabel">Your Recipe</h5>
+            <h5 class="modal-title" id="recipeSelectionModalLabel">Generated Recipes</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body" id="recipeModalBody">
-            <div id="recipeStepsContainer"></div>
-            <div class="d-flex justify-content-between mt-3">
-              <button id="prevStepBtn" class="btn btn-secondary">← Anterior</button>
-                <button id="saveBtn" class="btn btn-success">Save Recipe</button>
-              <button id="nextStepBtn" class="btn btn-primary">Siguiente →</button>
-            </div>
+          <div class="modal-body">
+            <!-- Contenedor de tarjetas -->
+            <div id="recipeCardContainer" class="row row-cols-1 row-cols-md-3 g-4 mb-4"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
           </div>
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="recipeStepsModal" tabindex="-1" aria-labelledby="recipeStepsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="recipeStepsModalLabel">Recipe Steps</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="recipeStepsContainer"></div>
+          </div>
+          <div class="modal-footer d-flex justify-content-between">
+            <button type="button" class="search-btn" id="returnToRecipesBtn">← Return to recipes</button>
+            <button id="saveBtn" class="btn-enviar">Save Recipe</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
@@ -201,7 +209,7 @@
     <script src="{% static '/scripts/autoComplete.js' %}"></script>
     <script src="{% static '/scripts/saveRecipe.js' %}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    
     <script>
       jQuery(document).ready(function () {
         jQuery(".container-wrap").append(
