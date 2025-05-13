@@ -52,9 +52,11 @@ def insertPreferences(data, user_id):
     """
     Insertar o actualizar las preferencias del usuario en la tabla userPreferences.
     """
+
     allergies = data.get('allergies', [])
     nutrition = data.get('nutrition', '')
     cooking_level = data.get('cooking_level', '')
+    language = data.get('language', 'english')
 
     # Normaliza listas en string CSV
     if isinstance(allergies, list):
@@ -65,15 +67,21 @@ def insertPreferences(data, user_id):
     if not cooking_level:
         cooking_level = 'Beginner'
 
+    if not language:
+        language = 'english'
+
+    print("Las preferencias son: ", allergies, nutrition, cooking_level, language)
+
     with connection.cursor() as cursor:
         cursor.execute("""
-            INSERT INTO userPreferences (user_id, allergies, nutrition, cooking_level)
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO userPreferences (user_id, allergies, nutrition, cooking_level, language)
+            VALUES (%s, %s, %s, %s, %s)
             ON CONFLICT (user_id) DO UPDATE SET
                 allergies = EXCLUDED.allergies,
                 nutrition = EXCLUDED.nutrition,
-                cooking_level = EXCLUDED.cooking_level
-        """, [user_id, allergies, nutrition, cooking_level])
+                cooking_level = EXCLUDED.cooking_level,
+                language = EXCLUDED.language
+        """, [user_id, allergies, nutrition, cooking_level, language])
 
 def getPreferences(request):
     """
@@ -81,22 +89,24 @@ def getPreferences(request):
     """
     with connection.cursor() as cursor:
         cursor.execute("""
-            SELECT allergies, nutrition, cooking_level
+            SELECT allergies, nutrition, cooking_level, language
             FROM userPreferences
             WHERE user_id = %s
         """, [request.user.id])
         row = cursor.fetchone()
 
     if row:
-        allergies, nutrition, cooking_level = row
+        allergies, nutrition, cooking_level, language = row
         return {
             'allergies': [a.strip() for a in allergies.split(',')] if allergies else [],
             'nutrition': nutrition if nutrition else 'No',
-            'cooking_level': cooking_level or 'Beginner'
+            'cooking_level': cooking_level or 'Beginner',
+            'language': language 
         }
 
     return {
         'allergies': [],
         'nutrition': 'No',
-        'cooking_level': 'Beginner'
+        'cooking_level': 'Beginner',
+        'language': 'english'
     }

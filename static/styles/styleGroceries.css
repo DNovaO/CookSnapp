@@ -89,7 +89,7 @@ body {
   color: white;
   padding: 5px 10px;
   font-size: 16px;
-  border-radius: 10px;
+  border-radius: 5px;
   font-weight: 600;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -358,7 +358,7 @@ video {
   color: white;
   padding: 5px 10px;
   font-size: 16px;
-  border-radius: 10px;
+  border-radius: 5px;
   font-weight: 600;
   border: none;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -377,4 +377,30 @@ video {
   height: 100vh;
   background-color: rgba(255, 255, 255, 0.85);
   z-index: 1050; /* encima de modales */
+}
+
+.no-border-list .list-group-item {
+  border: none;
+}
+
+input[type="checkbox"].form-check-input {
+  accent-color: #091179; /* Azul personalizado */
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+input[type="checkbox"].form-check-input:checked {
+    box-shadow: 0 0 0 2px #091179; /* Borde amarillo cuando está seleccionado */
+}
+
+.checked-step {
+  background-color: #ffb76a !important;
+  transition: background-color 0.4s ease, transform 0.3s ease;
+  transform: scale(1.01);
+  border-radius: 5px;
+}
+
+.step-item {
+  transition: background-color 0.4s ease, transform 0.3s ease;
 }

@@ -7,8 +7,10 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
-import openai
-from openai import OpenAI
+# import openai
+# from openai import OpenAI
+# import openai
+# from openai import OpenAI
 from django.conf import settings
 import sqlite3
 from django.db import connection
@@ -19,11 +21,9 @@ from django.utils.timezone import now
 def photo(request):
     return render(request, 'photoTemplate/photoTemplate.html')
 
-import openai
-from openai import OpenAI
 
 def generate_recipe(ingredients, nivel='intermediate', nutricion='yes', alergias='none', idioma='english'):
-    client = OpenAI(api_key=settings.OPENAI_API_KEY)
+    # client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
     prompt = f"""
     Eres un generador de recetas culinarias experto. Siempre debes generar 3 recetas diferentes en base a los siguientes criterios personalizados:

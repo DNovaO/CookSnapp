@@ -47,11 +47,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const allAllergies = [...selectedAllergies, ...customAllergies];
             const cookingLevel = document.querySelector("select[name='cooking_level']")?.value || "Beginner";
             const nutrition = document.querySelector("input[name='nutrition']:checked")?.value || "No";
+            const language = document.querySelector("select[name='language']")?.value || "english";
 
             const data = {
                 allergies: allAllergies,
                 cooking_level: cookingLevel,
-                nutrition: nutrition
+                nutrition: nutrition,
+                language: language
             };
 
             showLoader("Updating preferences...");

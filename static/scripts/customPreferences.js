@@ -102,7 +102,7 @@ function sendPreferencesToServer() {
     const body = {
         allergies: getCheckedValues('allergies'),
         nutrition: getCheckedValues('nutrition'),
-        cookingLevel: document.getElementById('cookingLevel').value,
+        cooking_level: document.getElementById('cookingLevel').value,
     };
     console.log(body);
 

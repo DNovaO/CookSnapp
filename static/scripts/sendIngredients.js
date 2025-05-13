@@ -107,7 +107,7 @@ function renderChecklist(recipe) {
   checklistContainer.innerHTML = `
     <h4>${recipe.titulo}</h4>
     <p class="text-muted">${recipe.descripcion || ""}</p>
-    <ul class="list-group" id="checklistSteps"></ul>
+    <ul class="list-group no-border-list" id="checklistSteps"></ul>
   `;
 
   const list = document.getElementById("checklistSteps");
@@ -117,7 +117,7 @@ function renderChecklist(recipe) {
     li.className = "list-group-item d-flex align-items-start";
     li.innerHTML = `
       <input type="checkbox" id="step-${index}" class="form-check-input mt-1 me-2">
-      <label for="step-${index}" class="form-check-label flex-grow-1" style="cursor: pointer;">
+      <label for="step-${index}" class="form-check-label flex-grow-1" style="cursor: pointer; font-weight: 500;">
         ${step}
       </label>
     `;
@@ -126,15 +126,22 @@ function renderChecklist(recipe) {
     const checkbox = li.querySelector("input");
     const label = li.querySelector("label");
 
+    // Cuando creas el li:
+    li.classList.add("step-item");
+
+    // Luego al marcar/desmarcar:
     checkbox.addEventListener("change", () => {
-      if (checkbox.checked) {
+    if (checkbox.checked) {
         label.style.textDecoration = "line-through";
         label.style.color = "#6c757d";
-      } else {
+        li.classList.add("checked-step");
+    } else {
         label.style.textDecoration = "none";
         label.style.color = "inherit";
-      }
+        li.classList.remove("checked-step");
+    }
     });
+
   });
 
   // Mostrar modal de pasos

@@ -243,3 +243,82 @@ color: #FF5535;
         font-size: 1.2rem;
     }
 }
+.custom-container {
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid transparent;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-container:hover {
+    cursor: pointer;
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.custom-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #FF5535, #eec626, #FF5535);
+    background-size: 300% 100%;
+    animation: border-animate 6s ease-in-out infinite;
+    border-radius: 0 0 8px 8px;
+}
+
+@keyframes border-animate {
+    0% {
+        background-position: 0% 0;
+    }
+    50% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: 0% 0;
+    }
+}
+
+.btn-enviar {
+  background-color: #2669b1;
+  color: white;
+  padding: 5px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  font-weight: 600;
+  border: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-enviar:hover {
+    background-color: #091179;
+    color: white;
+}
+
+.no-border-list .list-group-item {
+  border: none;
+}
+
+input[type="checkbox"].form-check-input {
+  accent-color: #091179; /* Azul personalizado */
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+input[type="checkbox"].form-check-input:checked {
+    box-shadow: 0 0 0 2px #091179; /* Borde amarillo cuando está seleccionado */
+}
+
+.checked-step {
+  background-color: #ffb76a !important;
+  transition: background-color 0.4s ease, transform 0.3s ease;
+  transform: scale(1.01);
+  border-radius: 5px;
+}
+
+.step-item {
+  transition: background-color 0.4s ease, transform 0.3s ease;
+}

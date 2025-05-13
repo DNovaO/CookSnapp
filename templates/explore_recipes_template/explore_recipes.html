@@ -17,43 +17,36 @@
 
   <body class="background">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light p-3">
-      <!-- Logo -->
-      <a class="navbar-brand" href="{% url 'main' %}">
-        <img
-          src="{% static 'resources/cooksnap-logo.png' %}"
-          alt="Cooksnap Logo"
-          class="hexagon-img"
-          style="min-width:150px; height:auto;"
-        />
-      </a>
-
-      <!-- Toggler button for mobile -->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Navbar content -->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto align-items-center">
-          <li class="nav-item">
-            <h1
-              class="nav-link mb-0 text-center text-lg-start fw-bold fs-5 text-dark"
-            >
-              Welcome <span style="color:#FF5535">{{ user.username }}</span>!
-              Ready to start cooking?
-            </h1>
-          </li>
-        </ul>
-      </div>
+   <nav class="navbar navbar-expand-lg navbar-light p-3">
+        <!-- Logo -->
+        <a class="navbar-brand" href="{% url 'main' %}">
+            <img src="{% static 'resources/cooksnap-logo.png' %}" alt="Cooksnap Logo" 
+                class="hexagon-img" style="min-width:150px; height:auto;" /><span class="fw-bold fs-5 text-dark">Some gambling recipes</span>
+        </a>
+    
+        <!-- Toggler button for mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <!-- Navbar content -->
+        <div class="collapse navbar-collapse" id="navbarNav" >
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item me-3">
+                    <h1 class="nav-link mb-0 text-center text-lg-start fw-bold fs-5 text-dark">
+                        Welcome <span style="color:#FF5535">{{ user.username }}</span>! Ready to start cooking?
+                    </h1>
+                </li>
+                <li class="nav-item">
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger" type="submit">
+                            <i class="bi bi-box-arrow-right"></i> Logout
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
     </nav>
 
     <ul class="circles">
