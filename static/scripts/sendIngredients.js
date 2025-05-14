@@ -2,19 +2,21 @@ document.addEventListener("DOMContentLoaded", function () {
   const submitBtn = document.getElementById("submitIngredientsBtn");
 
   submitBtn.addEventListener("click", function () {
-    const tableRows = document.querySelectorAll("#foodTable tbody tr");
+    const cards = document.querySelectorAll("#ingredientsCardContainer .card");
     let ingredientsList = [];
 
     const username = document.getElementById("username").textContent.trim();
 
-    tableRows.forEach((row) => {
-      const foodItem = row.cells[1].textContent.trim();
-      const quantity = row.cells[2].textContent.trim();
+    cards.forEach((card) => {
+      const name = card.getAttribute("data-name");
+      const quantity = card.getAttribute("data-quantity");
+      const unit = card.getAttribute("data-unit");
+      const state = card.getAttribute("data-state");
 
-      if (foodItem && quantity) {
+      if (name && quantity) {
         ingredientsList.push({
-          food: foodItem,
-          quantity: parseInt(quantity)
+          food: name,
+          quantity: `${quantity} ${unit} (${state})`
         });
       }
     });
@@ -31,13 +33,13 @@ document.addEventListener("DOMContentLoaded", function () {
         "X-CSRFToken": getCSRFToken(),
       },
       body: JSON.stringify({
-        "ingredients": ingredientsList, 
+        "ingredients": ingredientsList,
         "username": username
       }),
     })
       .then((response) => {
         if (response.ok) {
-          return response.json(); // ¡necesario para renderizar!
+          return response.json(); // necesario para renderizar
         } else {
           throw new Error("Error en la respuesta del servidor.");
         }
@@ -62,6 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return "";
   }
 });
+
 
 function renderRecipes(data) {
   const cardsContainer = document.getElementById("recipeCardContainer");

@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const increaseBtn = document.getElementById("increaseBtn");
     const decreaseBtn = document.getElementById("decreaseBtn");
     const addFoodBtn = document.getElementById("addFoodBtn");
-    const foodTable = document.getElementById("foodTable").querySelector("tbody");
     let counter = 0;
 
     // Increase Quantity
