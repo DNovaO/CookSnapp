@@ -29,6 +29,14 @@ body {
     background-size: 300% 100%; /* Ajusta el tamaño del gradiente para el efecto */
     animation: border-animate 6s ease-in-out infinite;
 }
+.list-group-numbered > .list-group-item {
+  font-size: 1rem;
+  padding: 0.75rem 1.25rem;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  margin-bottom: 5px;
+  border-radius: 8px;
+}
 
 @keyframes border-animate {
     0% {
@@ -93,6 +101,42 @@ body {
     display: block;
     margin-bottom: 10px;
 }
+    .circles {
+      position: fixed;
+      z-index: 0 !important;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .container,
+    .navbar,
+    .card,
+    form {
+      position: relative;
+      z-index: 1;
+    }
+
+    .custom-card {
+      font-size: 0.9rem;
+      padding: 0.5rem;
+    }
+
+    .custom-card .card-title {
+      font-size: 1rem;
+    }
+
+    .custom-card img {
+      max-height: 120px;
+      object-fit: cover;
+    }
+
+    .modal-body {
+      max-height: 70vh;
+      overflow-y: auto;
+    }
 
 a.btn {
     display: block;
@@ -230,6 +274,8 @@ color: #FF5535;
 .custom-card:hover .card-text {
     color: #ffffff; /* Cambiar texto a blanco */
 }
+
+
 
 /* Ajustes responsivos */
 @media (max-width: 768px) {
