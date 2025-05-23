@@ -1,16 +1,20 @@
-function showLoader() {
-  document.getElementById("fullscreenLoader").style.display = "block";
+function showLoaderWithMessage(message) {
+  const overlay = document.getElementById("loaderOverlay");
+  const loaderMessage = document.getElementById("loaderMessage");
+  loaderMessage.textContent = message;
+  overlay.style.display = "flex";
 }
 
 function hideLoader() {
-  document.getElementById("fullscreenLoader").style.display = "none";
+  const overlay = document.getElementById("loaderOverlay");
+  overlay.style.display = "none";
 }
 
 window.saveRecipe = function(index) {
   const activeRecipe = JSON.parse(localStorage.getItem('activeRecipe'));
 
   if (!activeRecipe) {
-    alert("No hay receta activa para guardar.");
+    alert("No active recipe to save.");
     return;
   }
 
@@ -22,7 +26,7 @@ window.saveRecipe = function(index) {
     pasos: Array.isArray(pasos) ? pasos : []
   };
 
-  showLoader(); // ← Mostrar el loader de pantalla completa
+  showLoaderWithMessage("Saving your recipe...");
 
   fetch("/photo/save_recipe/", {
     method: "POST",
@@ -35,18 +39,17 @@ window.saveRecipe = function(index) {
   .then(response => response.json())
   .then(data => {
     localStorage.removeItem('activeRecipe');
-    hideLoader(); // ← Ocultar al terminar
+    hideLoader();
 
-    alert("Receta guardada exitosamente.");
+    alert("Recipe saved successfully.");
   })
   .catch(error => {
-    console.error("Error al guardar receta:", error);
-    hideLoader(); // ← Asegúrate de ocultarlo también en error
+    console.error("Error saving recipe:", error);
+    hideLoader();
 
-    alert("Error al guardar receta.");
+    alert("There was an error saving your recipe.");
   });
 };
-
 
 function getCSRFToken() {
   const cookies = document.cookie.split(";");
@@ -57,4 +60,15 @@ function getCSRFToken() {
     }
   }
   return "";
+}
+
+function showToast(message, backgroundColor = "#323232") {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.style.backgroundColor = backgroundColor;
+  toast.style.display = "block";
+
+  setTimeout(() => {
+    toast.style.display = "none";
+  }, 2500);
 }

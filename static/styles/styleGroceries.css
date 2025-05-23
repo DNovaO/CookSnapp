@@ -419,3 +419,66 @@ input[type="checkbox"].form-check-input:checked {
     background-position: 0% 0;
   }
 }
+
+#loaderOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.loader-box {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #ff6f00;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#loaderMessage {
+  font-size: 1.2rem;
+  color: #444;
+}
+
+.toast-message {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #343a40;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  z-index: 1055;
+  font-weight: 500;
+  opacity: 0.95;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+.toast-message.show {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px) translateX(-50%); }
+  to { opacity: 0.95; transform: translateY(0) translateX(-50%); }
+}

@@ -26,10 +26,19 @@ SECRET_KEY = "django-insecure-9rft=e&6p!yml7*z-90%mn2xk4s#-j2cfcug@x9t&577scjk=l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '67d4-187-210-107-206.ngrok-free.app'
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://67d4-187-210-107-206.ngrok-free.app'
+]
 
 LOGOUT_REDIRECT_URL = '/login/'
 
+GOOGLE_API_KEY = 'AIzaSyCvkQYxSenf-Fc7SyK-KxmcqoeiCv17-GQ'
 
 # Application definition
 
