@@ -4,24 +4,27 @@ version 1.1 - 08/05/2025 - Diego Nova Olguin:
     Es el core de la aplicación.
 """
 import json
+import base64
+import cv2
+import numpy as np
+import os
+import sqlite3
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.conf import settings
-import sqlite3
 from django.db import connection
-from textwrap import dedent
 from django.utils.timezone import now
 import google.generativeai as genai
+from ultralytics import YOLO
+
+# Cargar modelo YOLO una vez
+MODEL_PATH = os.path.join(settings.BASE_DIR,  "yolo_models", "optimized.pt") 
+yolo_model = YOLO(MODEL_PATH)
 
 @csrf_exempt
 def photo(request):
     return render(request, 'photoTemplate/photoTemplate.html')
-
-
-import json
-import google.generativeai as genai
-from django.conf import settings
 
 def generate_recipe(ingredients, nivel='intermediate', nutricion='yes', alergias='none', idioma='english'):
     genai.configure(api_key=settings.GOOGLE_API_KEY)
@@ -54,12 +57,11 @@ def generate_recipe(ingredients, nivel='intermediate', nutricion='yes', alergias
         response = model.generate_content(prompt, generation_config={"temperature": 0.8})
         content = response.text.strip()
 
-        # Eliminar posibles backticks y lenguaje del bloque (como ```json)
         if content.startswith("```"):
-            content = content.strip("`")  # elimina los backticks
+            content = content.strip("`")
             lines = content.splitlines()
             if lines and lines[0].strip().lower() == "json":
-                lines = lines[1:]  # elimina "json"
+                lines = lines[1:]
             content = "\n".join(lines)
 
         recipe_json = json.loads(content)
@@ -89,7 +91,6 @@ def process_ingredients(request):
             if not ingredients:
                 return JsonResponse({'error': 'No se recibieron ingredientes'}, status=400)
 
-            # Obtener user_id
             with connection.cursor() as cursor:
                 cursor.execute("SELECT id FROM auth_user WHERE username = %s", [username])
                 user_row = cursor.fetchone()
@@ -99,7 +100,6 @@ def process_ingredients(request):
 
             print("El id de usuario es: ", user_id)
 
-            # Obtener preferencias del usuario
             with connection.cursor() as cursor:
                 cursor.execute("""
                     SELECT allergies, nutrition, cooking_level, language 
@@ -160,51 +160,35 @@ def save_recipe(request):
     except Exception as e:
         return JsonResponse({"error": f"Error interno: {str(e)}"}, status=500)
 
+@csrf_exempt
+def detect_ingredients(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            image_data = data.get('image', '')
 
-    # content = dedent("""
-    # [
-    #     {
-    #         "titulo": "Apple Cinnamon Muffins (Dairy-Free)",
-    #         "descripcion": "Delicious and moist muffins made with fresh apples, perfect for breakfast or a snack.",
-    #         "pasos": [
-    #             "Preheat the oven to 180°C (350°F) and line a muffin tray with paper liners.",
-    #             "In a bowl, mix 1 cup flour, 1/2 cup sugar, 1 tsp baking powder, and 1/2 tsp cinnamon.",
-    #             "In another bowl, whisk 1 egg and 1/4 cup melted dairy-free butter (e.g., plant-based spread).",
-    #             "Peel and finely dice 1 apple, then fold it into the wet mixture.",
-    #             "Combine wet and dry ingredients until just mixed; do not overmix.",
-    #             "Spoon the batter into muffin cups, filling each about 2/3 full.",
-    #             "Bake for 20–25 minutes or until a toothpick comes out clean.",
-    #             "Let cool before serving."
-    #         ]
-    #     },
-    #     {
-    #         "titulo": "Dairy-Free Apple Pancakes",
-    #         "descripcion": "Fluffy pancakes with grated apple and a touch of cinnamon, ideal for a comforting dairy-free breakfast.",
-    #         "pasos": [
-    #             "In a large bowl, combine 1 cup flour, 2 tbsp sugar, 1 tsp baking powder, and 1/2 tsp cinnamon.",
-    #             "In another bowl, whisk 1 egg with 3/4 cup water and 2 tbsp melted dairy-free butter.",
-    #             "Grate 1 apple and mix it into the wet ingredients.",
-    #             "Pour the wet mixture into the dry ingredients and stir gently until combined.",
-    #             "Heat a non-stick pan over medium heat and lightly grease it with dairy-free butter.",
-    #             "Pour 1/4 cup batter per pancake and cook until bubbles form on the surface.",
-    #             "Flip and cook for another 2–3 minutes until golden.",
-    #             "Serve warm with a sprinkle of sugar or maple syrup."
-    #         ]
-    #     },
-    #     {
-    #         "titulo": "Baked Apple Fritters (Dairy-Free)",
-    #         "descripcion": "Oven-baked apple fritters made without dairy, a healthier twist on a classic treat.",
-    #         "pasos": [
-    #             "Preheat oven to 200°C (400°F) and line a baking tray with parchment paper.",
-    #             "In a bowl, mix 1 cup flour, 1/4 cup sugar, 1 tsp baking powder, and a pinch of salt.",
-    #             "Whisk 1 egg with 1/3 cup water and 2 tbsp melted dairy-free butter.",
-    #             "Peel and dice 1 apple, then fold it into the batter.",
-    #             "Drop spoonfuls of the batter onto the baking tray, spacing them out evenly.",
-    #             "Bake for 15–18 minutes until golden brown.",
-    #             "Let cool slightly and optionally dust with powdered sugar."
-    #         ]
-    #     }
-    # ]
-    # """)
+            if not image_data:
+                return JsonResponse({'error': 'No se proporcionó imagen'}, status=400)
 
-    # print("La respuesta del modelo es: ", content)
+            header, encoded = image_data.split(",", 1)
+            img_bytes = base64.b64decode(encoded)
+            nparr = np.frombuffer(img_bytes, np.uint8)
+            img_np = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+            results = yolo_model.predict(source=img_np, conf=0.4, imgsz=640)
+
+            ingredients = set()
+            for r in results:
+                if hasattr(r, 'names') and hasattr(r, 'boxes'):
+                    for box in r.boxes:
+                        class_id = int(box.cls[0])
+                        class_name = r.names[class_id]
+                        ingredients.add(class_name)
+
+            return JsonResponse({'ingredients': list(ingredients)})
+
+        except Exception as e:
+            print("Error:", e)
+            return JsonResponse({'error': f"Detection failed: {str(e)}"}, status=500)
+
+    return JsonResponse({'error': 'Método no permitido'}, status=400)
